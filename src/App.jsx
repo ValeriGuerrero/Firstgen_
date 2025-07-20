@@ -3,9 +3,13 @@ import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
 import Navbar from './Navbar';
 import FrontPic from './images/front.png';
 import { Contact } from './Contact';
+import Jobs from './Jobs';
+import Scholarships from './Scholarships';
+import SupportPrograms from './Supportprograms';
 import './App.css';
 
 function App() {
+
   return (
     <BrowserRouter>
       <Navbar />
@@ -29,6 +33,13 @@ function App() {
         </Route>
         <Route path='/contact' element={<Contact />} >
         </Route>
+        <Route path='/jobs' element={<Jobs />} />
+      </Routes>
+      <Routes>
+        <Route path='/Scholarships' element={<Scholarships />} />
+      </Routes>
+      <Routes>
+        <Route path='/SupportPrograms' element={<SupportPrograms />} />
       </Routes>
 
       <footer className='footer' >

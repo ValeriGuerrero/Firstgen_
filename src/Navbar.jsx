@@ -22,6 +22,9 @@ const Navbar = () => {
                 <ul className='navList'>
                     <li><Link to="/" onClick={() => setIsOpen(false)}>Home</Link></li>
                     <li><Link to="/contact" onClick={() => setIsOpen(false)}>Contact</Link></li>
+                    <li><Link to="/jobs" onClick={() => setIsOpen(false)}>Jobs</Link></li>
+                    <li><Link to="/Scholarships" onClick={() => setIsOpen(false)}>Scholarships</Link></li>
+                    <li><Link to="/SupportPrograms" onClick={() => setIsOpen(false)}>Support Programs</Link></li>
                 </ul>
             </div>
         </nav>
