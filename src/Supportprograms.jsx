@@ -1,34 +1,46 @@
 import React, { useState, useEffect } from 'react';
+import './SupportPrograms.css';
 
 function SupportPrograms() {
-
-    const [items, setItems] = useState([]);
+    const [supportPrograms, setSupportPrograms] = useState([]);
 
     useEffect(() => {
-        fetch('https://go.postman.co/workspace/674a335c-7ffa-4966-8529-cab135868bba/documentation/46900267-6f218a6e-5f89-4b3d-bcc7-2ea1fec8824c?entity=request-9d3912ee-cd9b-41c1-81a0-88dcc7cbcb58')
+        fetch('https://5347fd07-56f5-4b47-8de5-7c172b42125a.mock.pstmn.io/api/v1/support-programs')
             .then(response => response.json())
             .then(data => {
-                if (Array.isArray(data)) {
-                    setItems(data);
+                console.log("Fetched support programs:", data);
+                if (Array.isArray(data.supportPrograms)) {
+                    setSupportPrograms(data.supportPrograms);
                 } else {
-                    console.error("Expected an array but got:", data);
-                    setItems([]); // fallback to empty array
+                    console.error("Expected an array under 'supportPrograms' but got:", data);
+                    setSupportPrograms([]);
                 }
             })
-            .catch(error => console.error('Error:', error));
-        setItems([]);
+            .catch(error => {
+                console.error('Error fetching support programs:', error);
+                setSupportPrograms([]);
+            });
     }, []);
 
     return (
         <div className='SupportProgramsPage'>
             <h1 className='SupportProgramsTitle'>Support Programs</h1>
-            <p className='SupportProgramsDescription'>Here you can find Support Programs that
-                are suitable for first-generation college students.</p>
-            {items.map(item => (
-                <div key={item.id} data-testid={`item-${item.id}`}>
-                    {item.name}
-                </div>
-            ))}
+            <h2 className='SupportProgramsDescription'>
+                Here you can find Support Programs that are suitable for first-generation college students.
+            </h2>
+            {supportPrograms.length === 0 ? (
+                <p>No support programs available.</p>
+            ) : (
+                supportPrograms.map(item => (
+                    <div key={item.id} className="supportProgramCard">
+                        <h2>{item.name}</h2>
+                        <p>{item.description}</p>
+                        <p><strong>Eligibility:</strong> {item.eligibility}</p>
+                        <p><strong>Contact:</strong> {item.contact.email} | {item.contact.phone}</p>
+                        <p><strong>Schedule:</strong> {item.schedule.days.join(', ')}</p>
+                    </div>
+                ))
+            )}
         </div>
     );
 }

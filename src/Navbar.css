@@ -17,7 +17,7 @@
 }
 
 .logo{
-    height: 18vh;
+    height: 15vh;
     object-fit: contain;
 }
 .navbar-toggle {
@@ -26,7 +26,7 @@
   background: none;
   border: none;
   color: rgb(0, 0, 0);
-  font-size: 10vh;
+  font-size: 7vh;
   cursor: pointer;
   z-index:11;
 }
