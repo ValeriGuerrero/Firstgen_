@@ -1,34 +1,45 @@
 import React, { useState, useEffect } from 'react';
+import './Scholarships.css';
 
 function Scholarships() {
-
-    const [items, setItems] = useState([]);
+    const [scholarships, setScholarships] = useState([]);
 
     useEffect(() => {
-        fetch('https://go.postman.co/workspace/674a335c-7ffa-4966-8529-cab135868bba/documentation/46900267-6f218a6e-5f89-4b3d-bcc7-2ea1fec8824c?entity=request-9d3912ee-cd9b-41c1-81a0-88dcc7cbcb58')
+        fetch('https://5347fd07-56f5-4b47-8de5-7c172b42125a.mock.pstmn.io/api/v1/scholarships')
             .then(response => response.json())
             .then(data => {
-                if (Array.isArray(data)) {
-                    setItems(data);
+                console.log('Fetched scholarships:', data);
+                if (Array.isArray(data.data)) {
+                    setScholarships(data.data);
                 } else {
-                    console.error("Expected an array but got:", data);
-                    setItems([]); // fallback to empty array
+                    setScholarships([]);
+                    console.error('Unexpected data format:', data);
                 }
             })
-            .catch(error => console.error('Error:', error));
-        setItems([]);
+            .catch(error => {
+                console.error('Error fetching scholarships:', error);
+                setScholarships([]);
+            });
     }, []);
 
     return (
-        <div className='ScholarshipsPage'>
-            <h1 className='ScholarshipsTitle'>Scholarships</h1>
-            <p className='ScholarshipsDescription'>Here you can find Scholarships opportunities that
-                are suitable for first-generation college students.</p>
-            {items.map(item => (
-                <div key={item.id} data-testid={`item-${item.id}`}>
-                    {item.name}
-                </div>
-            ))}
+        <div className="scholarshipsPage">
+            <h1 className="scholarshipsTitle">Scholarships</h1>
+            <h2 className="scholarshipsDescription">
+                Find financial opportunities for first-generation college students.
+            </h2>
+            {scholarships.length === 0 ? (
+                <p>No scholarships available.</p>
+            ) : (
+                scholarships.map(item => (
+                    <div key={item.id} className="scholarshipCard">
+                        <h2>{item.title}</h2>
+                        <p><strong>Amount:</strong> ${item.amount}</p>
+                        <p><strong>Deadline:</strong> {item.deadline}</p>
+                        <p>{item.description}</p>
+                    </div>
+                ))
+            )}
         </div>
     );
 }
